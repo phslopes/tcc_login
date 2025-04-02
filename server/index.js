@@ -4,25 +4,13 @@ const mysql = require("mysql2");
 const cors = require("cors");
 
 const db = mysql.createPool({
-    host: 'localhost',
-    user: 'root',
-    password: '1234',
-    database: 'banco',
+    host: process.env.DB_HOST || 'mysql',
+    user: process.env.DB_USER || 'root',
+    password: process.env.DB_PASSWORD || '1234',
+    database: process.env.DB_NAME || 'banco',
 });
 
-// app.get('/', (req, res) => {
-//     db.query(
-//         "INSERT INTO usuarios (email, password) VALUES ('teste@gmail.com','1234567')",
-//         /*mostra uma mensagem na tela para saber qual é o erro*/
-//         // (err, result) => {
-//         //     if (err) {
-//         //         console.error("Erro ao inserir no banco:", err.message); // Mostra a mensagem exata
-//         //         return res.status(500).send("Erro ao inserir no banco: " + err.message);
-//         //     }
-//         //     res.send("Usuário inserido com sucesso!");
-//         // }
-//     );
-// });
+
 
 
 app.use(express.json());
@@ -57,9 +45,12 @@ app.post("/login", (req, res) => {
         [email, password],
         (err, result) => {
             if (err) {
-                req.send(err);
+                console.error('Erro ao consultar o banco de dados:', err); // Logando o erro
+        res.status(500).send({ message: 'Erro interno do servidor' });
+                // res.send(err);
+                return;
             }
-            if (result.length > 0) {
+            if (Array.isArray(result) && result.length > 0) {
                 res.send({ message: "Usuário logado com sucesso!" }); // Mensagem de sucesso
             } else {
                 res.send({ message: "Usuário não encontrado!" });

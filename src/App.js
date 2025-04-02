@@ -14,7 +14,7 @@ function App() {
     e.preventDefault();
 
     try {
-        const response = await fetch("http://localhost:3001/validate-email", {
+        const response = await fetch("http://backend:3001/validate-email", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ email }),
@@ -36,7 +36,7 @@ function App() {
 };
 
   const handleClickLogin = (values) => {
-    Axios.post('http://localhost:3001/login', {
+    Axios.post('http://backend:3001/login', {
       email: values.email,
       password: values.password,
     }).then((response) => {
@@ -56,7 +56,7 @@ function App() {
   });
 
   const handleClickRegister = (values) => {
-    Axios.post('http://localhost:3001/register', {
+    Axios.post('http://backend:3001/register', {
       email: values.email,
       password: values.password,
     }).then((response) => {

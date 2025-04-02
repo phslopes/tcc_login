@@ -1,0 +1,24 @@
+# Usa a imagem do Node.js
+FROM node
+
+# Define o diretório de trabalho no container
+WORKDIR /app
+
+# Copia o arquivo package.json e package-lock.json
+COPY package*.json ./
+
+# Instala as dependências do frontend
+RUN npm install
+
+# Copia o diretório public e src para dentro do container
+COPY ./public ./public
+COPY ./src ./src
+
+# Compila o frontend React
+RUN npm run build
+
+# Expõe a porta para o frontend
+EXPOSE 80
+
+# Comando para iniciar o frontend
+CMD ["npm", "start"]

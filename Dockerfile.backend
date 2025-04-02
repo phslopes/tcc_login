@@ -1,0 +1,20 @@
+# Usa a imagem do Node.js
+FROM node
+
+# Define o diretório de trabalho no container
+WORKDIR /app
+
+# Copia o arquivo package.json e package-lock.json do backend para o container
+COPY ./server/package*.json ./server/
+
+# Instala as dependências do backend
+RUN npm install --prefix ./server
+
+# Copia todo o código do backend para dentro do container
+COPY ./server ./server 
+
+# Expõe a porta para o backend
+EXPOSE 3001
+
+# Comando para iniciar o backend
+CMD ["node", "server/index.js"]
