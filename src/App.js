@@ -3,12 +3,14 @@ import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as yup from 'yup';
 import Axios from "axios";
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom'; 
 
 function App() {
   const [email, setEmail] = useState('');
   const [message, setMessage] = useState('');
   const [isValidEmail, setIsValidEmail] = useState(true);
   const [showRecoveryForm, setShowRecoveryForm] = useState(false); // Estado para controlar a exibição do formulário de recuperação de senha
+  const navigate = useNavigate();
 
   const handleLostSenha = async (e) => {
     e.preventDefault();
@@ -82,6 +84,10 @@ function App() {
 
   return (
     <div className="container">
+      {/* BOTÃO PARA SISTEMA ACADÊMICO */}
+      <button className="btn-button" onClick={() => navigate('/sistema')} >
+        Ir para Sistema Acadêmico
+      </button>
       <h1>Login</h1>
       <Formik initialValues={{ email: "", password: "", confirmPassword: "" }}
         onSubmit={handleClickLogin}
